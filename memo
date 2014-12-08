@@ -1,0 +1,19 @@
+
+
+
+
+
+
+0827:
+
+add nodal status into constraint sets.
+
+
+0828:
+
+modified changestat: add sudo node into the function argument
+
+inputs = clist$inputs and MHp$inputs, however, the inputsp redirect to input to sth... in model.c
+
+
+SAN works with nodal value toggle. 

@@ -1,0 +1,203 @@
+---
+title: "coevolution STERGM"
+author: "Kirk Li"
+date: "09/23/2014"
+output:
+  html_document:
+    number_sections: yes
+    toc: yes
+---
+# Coevolution STERGM
+###############################################################################
+```{r}
+try(setwd("Rmd"))
+opts_chunk$set(cache=TRUE)
+op <- par()
+par(mfrow=c(1,1),mar=c(3,3,1,1), mgp=c(2,1,0))
+np <- par()
+
+fls <-list.files("../../",recursive=T)
+source(paste0("../../",fls[grep("kk_utils/utils.R",fls)]))
+source(paste0("../../",fls[grep("cotergm/R/functions.R",fls)]))
+fig.path = "figures/"
+# .libPaths(cotergm)
+library("statnet.common",lib=cotergm)
+library("network",lib=cotergm)
+library("ergm",lib=cotergm)
+library("tergm",lib=cotergm)
+set.seed(123)
+```
+
+```{r}
+net1 <-as.network(read.table("../s50_data/s50-network1.dat"))
+net2 <-as.network(read.table("../s50_data/s50-network2.dat"))
+net3 <-as.network(read.table("../s50_data/s50-network3.dat"))
+alcohol <- read.table("../s50_data/s50-alcohol.dat")
+drugs <- read.table("../s50_data/s50-drugs.dat")
+net <- net1
+
+d2ud <- function(net){
+	net <- as.matrix(net)
+	for (i in 1:nrow(net)){
+		for(j in 1:nrow(net)){
+			net[i,j] = max(net[i,j],net[j,i])
+		}}
+	as.network(net,directed=FALSE)
+}
+
+net1 <- d2ud(net1)
+net2 <- d2ud(net2)
+net3 <- d2ud(net3)
+
+al1 <- as.numeric(alcohol[,1]>3)+1
+al2 <- as.numeric(alcohol[,2]>3)+1
+net1 %v% "status" <- al1
+net2 %v% "status" <- al2
+
+y0 <- net1
+nw <- net2
+```
+
+
+
+
+```{r}
+# Formation Plus Network
+FP <- FP.nw(y0,nw,"status")
+# Formation Minus Network
+FM <- FM.nw(y0,nw,"status")
+# Dissolution Plus Network
+DP <- DP.nw(y0,nw,"status")
+# Dissolution Minus Network
+DM <- DM.nw(y0,nw,"status")
+```
+
+
+```{r}
+constraints=~atleastnonminus(y0)
+
+MHproposal <- MHproposal(constraints,nw=y0,arguments=list())
+
+summary(y0~edges+plus+nodematch_cotergm("status",diff=TRUE),MHproposal=MHproposal)
+summary(nw~edges+plus+nodematch_cotergm("status",diff=TRUE),MHproposal=MHproposal)
+
+
+summary(FP~edges+plus+nodematch_cotergm("status",diff=TRUE,y0edge=0),MHproposal=MHproposal)
+summary(FP~edges+plus+nodematch_cotergm("status",diff=TRUE,y0edge=1),MHproposal=MHproposal)
+summary(FP~edges+plus+nodematch_cotergm("status",diff=TRUE,y0edge=2),MHproposal=MHproposal)
+summary(FM~edges+plus+nodematch_cotergm("status",diff=TRUE,y0edge=0),MHproposal=MHproposal)
+summary(FM~edges+plus+nodematch_cotergm("status",diff=TRUE,y0edge=1),MHproposal=MHproposal)
+summary(FM~edges+plus+nodematch_cotergm("status",diff=TRUE,y0edge=2),MHproposal=MHproposal)
+summary(DP~edges+plus+nodematch_cotergm("status",diff=TRUE,y0nodal=0),MHproposal=MHproposal)
+summary(DP~edges+plus+nodematch_cotergm("status",diff=TRUE,y0nodal=1),MHproposal=MHproposal)
+summary(DP~edges+plus+nodematch_cotergm("status",diff=TRUE,y0nodal=2),MHproposal=MHproposal)
+summary(DM~edges+plus+nodematch_cotergm("status",diff=TRUE,y0nodal=0),MHproposal=MHproposal)
+summary(DM~edges+plus+nodematch_cotergm("status",diff=TRUE,y0nodal=1),MHproposal=MHproposal)
+summary(DM~edges+plus+nodematch_cotergm("status",diff=TRUE,y0nodal=2),MHproposal=MHproposal)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r, warning=FALSE}
+
+fit1.edges <- ergm(FP~edges,control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atleastnonminus(y0),verbose=0, eval.loglik=F)
+
+fit1.plus <- ergm(FP~plus,control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atleastnonminus(y0),verbose=0, eval.loglik=F)
+
+
+fit1.edges_plus <- ergm(FP~edges+plus,control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atleastnonminus(y0),verbose=0, eval.loglik=F)
+
+
+
+fit1.edges_plus_nodematch <- ergm(FP~edges+plus+nodematch_cotergm("status",diff=TRUE,y0edge=2,keep=2),control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atleastnonminus(y0),verbose=0, eval.loglik=F)
+```
+
+```{r, warning=FALSE}
+
+
+
+
+fit2.edges <- ergm(FM~edges,control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atleastnonplus(y0),verbose=0, eval.loglik=F)
+
+fit2.plus <- ergm(FM~plus,control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atleastnonplus(y0),verbose=0, eval.loglik=F)
+
+
+fit2.edges_plus <- ergm(FM~edges+plus,control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atleastnonplus(y0),verbose=0, eval.loglik=F)
+
+
+fit2.edges_plus_nodematch <- ergm(FM~edges+plus+nodematch_cotergm("status",diff=TRUE,y0edge=2,keep=1),control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atleastnonplus(y0),verbose=0, eval.loglik=F)
+
+```
+
+```{r, warning=FALSE}
+
+
+
+fit3.edges <- ergm(DP~edges,control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atmostnonminus(y0),verbose=0, eval.loglik=F)
+
+fit3.plus <- ergm(DP~plus,control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atmostnonminus(y0),verbose=0, eval.loglik=F)
+
+
+fit3.edges_plus <- ergm(DP~edges+plus,control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atmostnonminus(y0),verbose=0, eval.loglik=F)
+
+
+fit3.edges_plus_nodematch <- ergm(DP~edges+plus+nodematch_cotergm("status",diff=TRUE,y0nodal=2,keep=1),control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atmostnonminus(y0),verbose=0, eval.loglik=F)
+
+
+```{r, warning=FALSE}
+
+
+
+
+fit4.edges <- ergm(DM~edges,control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atmostnonplus(y0),verbose=0, eval.loglik=F)
+
+fit4.plus <- ergm(DM~plus,control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atmostnonplus(y0),verbose=0, eval.loglik=F)
+
+
+fit4.edges_plus <- ergm(DM~edges+plus,control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atmostnonplus(y0),verbose=0, eval.loglik=F)
+
+
+fit4.edges_plus_nodematch <- ergm(DM~edges+plus+nodematch_cotergm("status",diff=TRUE,y0nodal=2,keep=2),control=control.ergm(MCMC.burnin=10000,MCMC.samplesize=10000,MCMC.interval=100,MCMLE.maxit=20,MCMLE.min.effectiveSize=20,MCMC.max.interval=100), constraints=~atmostnonplus(y0),verbose=0, eval.loglik=F)
+```
+
+
+```{r,warning=FALSE}
+fit1.list <- lapply(ls()[grep("fit1",ls())][c(1,4,2,3)],function(x)eval(parse(text=paste0('summary(',x,')$coef'))))
+
+fit2.list <- lapply(ls()[grep("fit2",ls())][c(1,4,2,3)],function(x)eval(parse(text=paste0('summary(',x,')$coef'))))
+
+fit3.list <- lapply(ls()[grep("fit3",ls())][c(1,4,2,3)],function(x)eval(parse(text=paste0('summary(',x,')$coef'))))
+
+fit4.list <- lapply(ls()[grep("fit4",ls())][c(1,4,2,3)],function(x)eval(parse(text=paste0('summary(',x,')$coef'))))
+
+fit1.list
+fit2.list
+fit3.list
+fit4.list
+```
+
+

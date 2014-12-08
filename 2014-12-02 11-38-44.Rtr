@@ -1,0 +1,241 @@
+﻿##------ Dec 2, 2014, 11:38:44 AM ------##
+
+R version 3.1.1 (2014-07-10) -- "Sock it to Me"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> source("/home/kirk/Dropbox/hiv_network/workspace/kk_utils/utils.R", echo=FALSE, encoding="UTF-8")
+trying URL 'http://cran.stat.ucla.edu/src/contrib/zoo_1.7-11.tar.gz'
+Content type 'application/x-tar' length 819242 bytes (800 Kb)
+opened URL
+==================================================
+downloaded 800 Kb
+
+
+The downloaded source packages are in
+	‘/tmp/RtmpHtGSha/downloaded_packages’
+Updating HTML index of packages in '.Library'
+Making 'packages.html' ... done
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+also installing the dependencies ‘quadprog’, ‘timeDate’, ‘tseries’, ‘fracdiff’, ‘colorspace’, ‘RcppArmadillo’
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/quadprog_1.5-5.tar.gz'
+Content type 'application/x-tar' length 33651 bytes (32 Kb)
+opened URL
+==================================================
+downloaded 32 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/timeDate_3011.99.tar.gz'
+Content type 'application/x-tar' length 314266 bytes (306 Kb)
+opened URL
+==================================================
+downloaded 306 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/tseries_0.10-32.tar.gz'
+Content type 'application/x-tar' length 163043 bytes (159 Kb)
+opened URL
+==================================================
+downloaded 159 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/fracdiff_1.4-2.tar.gz'
+Content type 'application/x-tar' length 57636 bytes (56 Kb)
+opened URL
+==================================================
+downloaded 56 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/colorspace_1.2-4.tar.gz'
+Content type 'application/x-tar' length 242791 bytes (237 Kb)
+opened URL
+==================================================
+downloaded 237 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/RcppArmadillo_0.4.550.1.0.tar.gz'
+Content type 'application/x-tar' length 936961 bytes (915 Kb)
+opened URL
+==================================================
+downloaded 915 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/forecast_5.6.tar.gz'
+Content type 'application/x-tar' length 155242 bytes (151 Kb)
+opened URL
+==================================================
+downloaded 151 Kb
+
+
+The downloaded source packages are in
+	‘/tmp/RtmpHtGSha/downloaded_packages’
+Updating HTML index of packages in '.Library'
+Making 'packages.html' ... done
+Loading required package: timeDate
+
+Attaching package: ‘timeDate’
+
+The following object is masked from ‘package:xtable’:
+
+    align
+
+This is forecast 5.6 
+
+also installing the dependency ‘base64enc’
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/base64enc_0.1-2.tar.gz'
+Content type 'application/x-tar' length 6407 bytes
+opened URL
+==================================================
+downloaded 6407 bytes
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/sendmailR_1.2-1.tar.gz'
+Content type 'application/x-tar' length 7367 bytes
+opened URL
+==================================================
+downloaded 7367 bytes
+
+
+The downloaded source packages are in
+	‘/tmp/RtmpHtGSha/downloaded_packages’
+Updating HTML index of packages in '.Library'
+Making 'packages.html' ... done
+also installing the dependencies ‘plyr’, ‘gtable’, ‘proto’, ‘RColorBrewer’, ‘dichromat’, ‘munsell’, ‘labeling’, ‘ggplot2’, ‘scales’, ‘reshape2’
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/plyr_1.8.1.tar.gz'
+Content type 'application/x-tar' length 393233 bytes (384 Kb)
+opened URL
+==================================================
+downloaded 384 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/gtable_0.1.2.tar.gz'
+Content type 'application/x-tar' length 19667 bytes (19 Kb)
+opened URL
+==================================================
+downloaded 19 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/proto_0.3-10.tar.gz'
+Content type 'application/x-tar' length 530758 bytes (518 Kb)
+opened URL
+==================================================
+downloaded 518 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/RColorBrewer_1.0-5.tar.gz'
+Content type 'application/x-tar' length 10656 bytes (10 Kb)
+opened URL
+==================================================
+downloaded 10 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/dichromat_2.0-0.tar.gz'
+Content type 'application/x-tar' length 84320 bytes (82 Kb)
+opened URL
+==================================================
+downloaded 82 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/munsell_0.4.2.tar.gz'
+Content type 'application/x-tar' length 91026 bytes (88 Kb)
+opened URL
+==================================================
+downloaded 88 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/labeling_0.3.tar.gz'
+Content type 'application/x-tar' length 10722 bytes (10 Kb)
+opened URL
+==================================================
+downloaded 10 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/ggplot2_1.0.0.tar.gz'
+Content type 'application/x-tar' length 2351447 bytes (2.2 Mb)
+opened URL
+==================================================
+downloaded 2.2 Mb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/scales_0.2.4.tar.gz'
+Content type 'application/x-tar' length 40093 bytes (39 Kb)
+opened URL
+==================================================
+downloaded 39 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/reshape2_1.4.tar.gz'
+Content type 'application/x-tar' length 34121 bytes (33 Kb)
+opened URL
+==================================================
+downloaded 33 Kb
+
+trying URL 'http://cran.stat.ucla.edu/src/contrib/EasyHTMLReport_0.1.1.tar.gz'
+Content type 'application/x-tar' length 9169 bytes
+opened URL
+==================================================
+downloaded 9169 bytes
+
+
+The downloaded source packages are in
+	‘/tmp/RtmpHtGSha/downloaded_packages’
+Updating HTML index of packages in '.Library'
+Making 'packages.html' ... done
+Loading required package: base64enc
+Loading required package: markdown
+Loading required package: knitr
+> # TODO: Add comment
+> # 
+> # Author: likl
+> ###############################################################################
+> setwd("R")
+> library(shiny)
+> library(zoo)
+> library(forecast)
+> library(xtable)
+> runApp()
+
+Listening on http://127.0.0.1:4600
+Error in library("network", lib = cotergm) : 
+  there is no package called ‘network’
+
+> (Command cancelled)
+> 
+> #
+> #rm(list=ls())
+> # TODO: Add comment
+> # 
+> # Author: likl
+> ###############################################################################
+> setwd("R")
+Error in setwd("R") : cannot change working directory
+> library(shiny)
+> library(zoo)
+> library(forecast)
+> library(xtable)
+> runApp()
+
+Listening on http://127.0.0.1:4600
+network: Classes for Relational Data
+Version 1.11 created on 2014-05-22.
+copyright (c) 2005, Carter T. Butts, University of California-Irvine
+                    Mark S. Handcock, University of California -- Los Angeles
+                    David R. Hunter, Penn State University
+                    Martina Morris, University of Washington
+                    Skye Bender-deMoll, University of Washington
+ For citation information, type citation("network").
+ Type help("network-package") to get started.
+
+
+ergm: version 3.3, created on 2014-02-06
+Copyright (c) 2014, Mark S. Handcock, University of California -- Los Angeles
+                    David R. Hunter, Penn State University
+                    Carter T. Butts, University of California -- Irvine
+      

@@ -1,0 +1,44 @@
+---
+title: "TERGM&RSiena"
+author: "Kirk Li"
+date: "Thursday, August 07, 2014"
+output: pdf_document
+---
+
+```{r}
+library(tergm)
+library(RSiena)
+data(samplk)
+```
+  
+```{r}
+samplk12 <- stergm(list(samplk1, samplk2),    
+                   formation=~ostar(1)+mutual+odegreepopularity+ttriple+transitiveties+balance+cycle(3),
+                   dissolution=~ostar(1)+mutual+odegreepopularity+ttriple+transitiveties+balance+cycle(3),
+    estimate="CMLE")
+
+```
+
+```{r}
+samplk12.s <- sienaDependent(
+    array( c(as.matrix(samplk1), as.matrix(samplk2)),dim=c(18,18,2)))
+
+mydata <- sienaDataCreate(samplk12.s)
+mydata
+
+myeff <- getEffects( mydata )
+myeff <- includeEffects( myeff, outPop, transTies, balance,transTrip, cycle3 )
+myeff
+myalgorithm <- sienaAlgorithmCreate(useStdInits = FALSE, projname = 'samp')
+ans <- siena07( myalgorithm, data = mydata, effects = myeff)
+
+```
+
+```{r}
+(summary(samplk12)$formation$coefs)
+(summary(samplk12)$dissolution$coefs)
+summary(samplk12)$formation$coefs[,1,drop=FALSE]+summary(samplk12)$dissolution$coefs[,1,drop=FALSE]
+ans
+```
+]
+
